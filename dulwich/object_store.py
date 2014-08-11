@@ -1089,3 +1089,8 @@ class ObjectStoreGraphWalker(object):
         return None
 
     __next__ = next
+
+
+def archive(store, tree, write_data, progress=None):
+    """Create an archive.
+    """

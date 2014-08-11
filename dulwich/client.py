@@ -710,6 +710,14 @@ class LocalGitClient(GitClient):
             return
         write_pack_objects(ProtocolFile(None, pack_data), objects_iter)
 
+    def archive(self, path, committish, write_data, progress=None,
+                write_error=None):
+        from dulwich.repo import Repo
+        from dulwich.object_store import archive
+        r = Repo(path)
+        o = r[committish]
+        return archive(r.object_store, o.tree, write_data=write_data, progress=progress)
+
 
 # What Git client to use for local access
 default_local_git_client_cls = SubprocessGitClient
