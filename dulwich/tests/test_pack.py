@@ -179,6 +179,14 @@ class TestPackDeltas(TestCase):
     def test_overflow(self):
         self._test_roundtrip(self.test_string_empty, self.test_string_big)
 
+    def test_dest_overflow(self):
+        self.assertRaises(
+            ValueError,
+            apply_delta, 'a'*0x10000, '\x80\x80\x04\x80\x80\x04\x80' + 'a'*0x10000)
+        self.assertRaises(
+            ValueError,
+            apply_delta, '', '\x00\x80\x02\xb0\x11\x11')
+
 
 class TestPackData(PackTests):
     """Tests getting the data from the packfile."""
